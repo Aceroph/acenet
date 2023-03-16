@@ -1,7 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return '<h1 style="text-align: center;">Home Page</h1>'
+    return render_template('base.html')
