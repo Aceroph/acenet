@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect
 import os
-from werkzeug.utils import secure_filename
 from github import Github
 
 g = Github(os.environ.get('GIT_TOKEN'))
