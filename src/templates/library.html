@@ -3,11 +3,7 @@
     <body>
         <ul>
             {% for file in files %}
-                {% if file[1] == 'dir' %}
-                    <li>/{{ file }}</li>
-                {% else %}
-                    <li>{{ file }}</li>
-                {% endif %}
+                <li><a href="/{{ file }}">{{ file }}</a></li>
             {% endfor %}
         </ul>
     </body>

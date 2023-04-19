@@ -28,7 +28,7 @@ def uploaded():
 		filename = request.form['filename']
 		if file and allowed_file(filename):
 			repo.create_file(f'src/f/{filename}{extension}', 'uploaded file', file.stream.read())
-			return redirect('/')
+			return redirect('/files')
 	return redirect('/upload')
 
 @app.route('/files/<path:filename>')
@@ -37,11 +37,5 @@ def show(filename):
 
 @app.route('/files')
 def files():
-	files = []
-	for file in os.listdir('src/f'):
-		if os.path.isdir(file):
-			files.append([file, 'dir'])
-		else:
-			files.append([file, 'file'])
-			
+	files = os.listdir('src/f')		
 	return render_template('library.html', files=files)
