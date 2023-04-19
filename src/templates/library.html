@@ -2,9 +2,14 @@
 <html>
     <body>
         <ul>
-        {% for file in files %}
-            <li>{{ file }}</li>
-        {% endfor %}
+            {% import os %}
+            {% for file in files %}
+                {% if os.path.isdir(file) %}
+                    <li>/{{ file }}</li>
+                {% else %}
+                    <li>{{ file }}</li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </body>
 </html>
