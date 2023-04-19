@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_from_directory, flash
 import os
 from github import Github
 
@@ -25,8 +25,9 @@ def upload():
 def uploaded():
 	if request.method == 'POST':
 		file = request.files['file']
-		if file and allowed_file(file.filename):
-			repo.create_file(f'f/{file.filename}', 'uploaded file', file.stream.read())
+		filename = request.form['filename']
+		if file and allowed_file(filename):
+			repo.create_file(f'f/{filename}', 'uploaded file', file.stream.read())
 			return redirect('/')
 	return redirect('/upload')
 
