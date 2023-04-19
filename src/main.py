@@ -33,7 +33,7 @@ def uploaded():
 
 @app.route('/files/<path:filename>')
 def show(filename):
-	return send_from_directory('./f', filename)
+	return send_from_directory('f/', filename)
 
 @app.route('/files')
 def files():
