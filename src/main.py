@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 import os
 from github import Github
 import base64
@@ -27,8 +27,10 @@ def uploaded():
 	if request.method == 'POST':
 		file = request.files['file']
 		if file and allowed_file(file.filename):
-			print(file.stream)
-			repo.create_file(f'f/{file.filename}', 'uploaded file', base64.b64encode(file.stream.read()))
-			print('success')
+			repo.create_file(f'f/{file.filename}', 'uploaded file', file.stream.read())
 			return redirect('/')
 	return redirect('/upload')
+
+@app.route('/f/<path:filename>')
+def show(filename):
+	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
