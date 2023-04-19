@@ -6,7 +6,6 @@ g = Github(os.environ.get("GIT_TOKEN"))
 repo = g.get_repo("Aceroph/acenet")
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = './f'
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
 
 def allowed_file(filename: str):
@@ -27,10 +26,10 @@ def uploaded():
 		file = request.files['file']
 		filename = request.form['filename']
 		if file and allowed_file(filename):
-			repo.create_file(f'f/{filename}', 'uploaded file', file.stream.read())
+			repo.create_file(f'src/f/{filename}', 'uploaded file', file.stream.read())
 			return redirect('/')
 	return redirect('/upload')
 
 @app.route('/f/<path:filename>')
 def show(filename):
-	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+	return send_from_directory('./f', filename)
