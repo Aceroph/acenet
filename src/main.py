@@ -24,12 +24,18 @@ def upload():
 def uploaded():
 	if request.method == 'POST':
 		file = request.files['file']
+		extension = file.filename.split('.')[-1].lower()
 		filename = request.form['filename']
 		if file and allowed_file(filename):
-			repo.create_file(f'src/f/{filename}', 'uploaded file', file.stream.read())
+			repo.create_file(f'src/f/{filename}{extension}', 'uploaded file', file.stream.read())
 			return redirect('/')
 	return redirect('/upload')
 
-@app.route('/f/<path:filename>')
+@app.route('/files/<path:filename>')
 def show(filename):
 	return send_from_directory('./f', filename)
+
+@app.route('/files')
+def files():
+	files = os.listdir('./f')
+	return render_template('library.html', files=files)
