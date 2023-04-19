@@ -37,5 +37,5 @@ def show(filename):
 
 @app.route('/files')
 def files():
-	files = os.listdir()
+	files = os.listdir('src')
 	return render_template('library.html', files=files)
