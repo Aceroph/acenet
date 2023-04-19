@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, send_from_directory
 import os
 from github import Github
-import base64
 
-g = Github('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')
+g = Github(os.environ.get("GIT_TOKEN"))
 repo = g.get_repo("Aceroph/acenet")
 
 app = Flask(__name__)
