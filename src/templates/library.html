@@ -2,7 +2,7 @@
 <html>
     <body>
         <ul>
-            {% import os %}
+            {% set os = import('os') %}
             {% for file in files %}
                 {% if os.path.isdir(file) %}
                     <li>/{{ file }}</li>
