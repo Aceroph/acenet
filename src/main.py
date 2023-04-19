@@ -1,16 +1,18 @@
 from flask import Flask, render_template, request, flash, redirect
 import os
 from github import Github
+import base64
 
-g = Github(os.environ.get('GIT_TOKEN'))
-repo = g.get_repo("acenet")
+g = Github('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')
+repo = g.get_repo("Aceroph/acenet")
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = './f'
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
 
 def allowed_file(filename: str):
-	return filename.split('.', 1)[-1].lower() in ALLOWED_EXTENSIONS
+	print(filename.split('.')[-1].lower())
+	return filename.split('.')[-1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def home():
@@ -23,15 +25,10 @@ def upload():
 @app.route('/uploaded', methods=['GET', 'POST'])
 def uploaded():
 	if request.method == 'POST':
-		if 'file' not in request.files:
-			return flash(request.url)
 		file = request.files['file']
-
-		if file.filename == '':
-			flash('No selected file')
-			return redirect(request.url)
-
 		if file and allowed_file(file.filename):
-			repo.create_file('/', 'uploaded file', str(file))
+			print(file.stream)
+			repo.create_file(f'f/{file.filename}', 'uploaded file', base64.b64encode(file.stream.read()))
+			print('success')
 			return redirect('/')
-	return redirect('/')
+	return redirect('/upload')
