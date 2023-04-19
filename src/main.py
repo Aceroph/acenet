@@ -37,5 +37,11 @@ def show(filename):
 
 @app.route('/files')
 def files():
-	files = os.listdir('src')
+	files = []
+	for file in os.listdir('src/f'):
+		if os.path.isdir(file):
+			files.append([file, 'dir'])
+		else:
+			files.append([file, 'file'])
+			
 	return render_template('library.html', files=files)

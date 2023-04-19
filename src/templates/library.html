@@ -2,9 +2,8 @@
 <html>
     <body>
         <ul>
-            {% set os = import('os') %}
             {% for file in files %}
-                {% if os.path.isdir(file) %}
+                {% if file[1] == 'dir' %}
                     <li>/{{ file }}</li>
                 {% else %}
                     <li>{{ file }}</li>
