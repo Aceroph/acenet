@@ -1,11 +1,9 @@
-from flask import Flask, render_template, request, redirect, send_from_directory, flash
+from flask import Flask, render_template, flash, request, redirect, send_from_directory, flash
 import os
-from github import Github
-
-g = Github(os.environ.get("GIT_TOKEN"))
-repo = g.get_repo("Aceroph/acenet")
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.secret_key = "f2gjdke02984ngnyjok09ewhdbwg2tr4fkrjr"
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
 
 def allowed_file(filename: str):
@@ -24,18 +22,22 @@ def upload():
 def uploaded():
 	if request.method == 'POST':
 		file = request.files['file']
-		extension = file.filename.split('.')[-1].lower()
-		filename = request.form['filename']
+		if file == None:
+			flash('No file selected !', 'warning')
+		filename = secure_filename(request.form['filename'])
+		if not filename:
+			flash('No filename entered !', 'warning')
 		if file and allowed_file(filename):
-			repo.create_file(f'src/f/{filename}{extension}', 'uploaded file', file.stream.read())
+			file.save(f'src/files/{filename}')
+			flash(f'Uploaded {filename} successfully !', 'message')
 			return redirect('/files')
 	return redirect('/upload')
 
 @app.route('/files/<path:filename>')
 def show(filename):
-	return send_from_directory('./f', filename)
+	return send_from_directory('files', filename)
 
 @app.route('/files')
 def files():
-	files = os.listdir('src/f')		
+	files = os.listdir('src/files')		
 	return render_template('library.html', files=files)
