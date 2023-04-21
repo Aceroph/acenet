@@ -11,7 +11,7 @@ def allowed_file(filename: str):
 	return filename.split('.')[-1].lower() in ALLOWED_EXTENSIONS
 
 def uploadfileexists():
-	if not os.path.exists('files/'):
+	if not os.path.exists('acenet/files'):
 		os.mkdir('acenet/files')
 
 def findpath(pathA: str, pathB: str):
