@@ -25,12 +25,54 @@
             text-align: center;
             color: crimson;
         }
+
+        div#mkdir input[type="submit"] {
+            background-color: transparent;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            color: gold;
+            border: 2px solid gold;
+            transition: 0.3s;
+        }
+
+        div#mkdir input[type="submit"]:hover {
+            background-color: gold;
+            color: #2e2e2e;
+            transition: 0.3s;
+        }
+
+        div#mkdir input[type="text"] {
+            background-color: transparent;
+            border: 2px solid gold;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            padding-left: 5px;
+            transition: 0.3s;
+            color: gold;
+            translate: -5px;
+        }
+
+        div#mkdir input[type="text"]:focus {
+            outline: none;
+        }
+
+        div#mkdir input[type="text"]:hover {
+            transition: 0.3s;
+            color: #2e2e2e;
+            background-color: gold;
+        }
     </style>
     {% endblock %}
 </head>
 
 <body>
     {% block body %}
+    <div id="mkdir">
+        <form action="/{{ src }}" method="post" enctype="multipart/form-data">
+            <input type="submit" name="create" value="Create">
+            <input type="text" name="name">
+        </form>
+    </div>
     <ul>
         {% if items %}
         {% for type, item in items %}

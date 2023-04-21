@@ -70,13 +70,20 @@ def uploaded():
 
 	return redirect('/upload')
 
-@app.route('/files/<path:filename>')
+@app.route('/files/<path:filename>', methods=['GET', 'POST'])
 def show(filename):
+	path = findpath('files', filename)
+
+	if request.method == 'POST':
+		dirname = request.form['name']
+		if dirname == '':
+			flash('No directory name !', 'warning')
+		os.mkdir(f'{path}/{dirname}')
+
 	if os.path.isfile(f'files/{filename}'):
 		return send_from_directory('files', filename)
 	else:
 		items = []	
-		path = findpath('files', filename)
 
 		for item in os.listdir(path):
 			if os.path.isdir(f'{path}/{item}'):
@@ -84,11 +91,17 @@ def show(filename):
 			else:
 				items.append(['file'])
 
-		return render_template('library.html', items=sorted(items))
+		return render_template('library.html', src=f'files/{filename}', items=sorted(items))
 
-@app.route('/files')
+@app.route('/files', methods=['GET', 'POST'])
 def files():
 	uploadfileexists()
+
+	if request.method == 'POST':
+		dirname = request.form['name']
+		if dirname == '':
+			flash('No directory name !', 'warning')
+		os.mkdir(f'files/{dirname}')
 
 	items = []
 	for item in os.listdir('files'):
@@ -97,4 +110,6 @@ def files():
 		else:
 			items.append(['file', item])
 
-	return render_template('library.html', items=sorted(items))
+	return render_template('library.html', src="files", items=sorted(items))
+
+app.run(debug=True)
