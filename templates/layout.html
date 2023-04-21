@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <style>
+        .flashes {
+            padding: 2px;
+            margin: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color: white;
+            animation: new-flash 0.1s linear;
+        }
+
+        .warning {
+            background-color: crimson;
+            border: 2px solid crimson;
+        }
+
+        .message {
+            background-color: mediumseagreen;
+            border: 2px solid mediumseagreen;
+        }
+
+        body {
+            background-color: #2e2e2e;
+            margin: 25px;
+        }
+
+        #top {
+            width: 100%;
+        }
+
+        #top img {
+            width: 64px;
+            height: 64px;
+            border-radius: 15px;
+            border: 2px solid gold;
+            padding: 2px;
+            float: left;
+        }
+
+        #top th#img {
+            width: 70px;
+        }
+
+        #top th#name h1 {
+            padding-left: 10px;
+            color: white;
+            font-size: xx-large;
+            float: left;
+        }
+
+        #top th#github a {
+            color: white;
+            font-size: xx-large;
+            transition: 0.5s;
+        }
+
+        #top th#github a:hover {
+            color: gold;
+            transition: 0.5s;
+        }
+
+        .golden-text {
+            color: gold;
+        }
+
+        #nav {
+            width: 100%;
+        }
+
+        #nav th {
+            text-align: center;
+            width: 33%;
+        }
+
+        #nav a {
+            color: white;
+            transition: 0.3s;
+            font-size: large;
+        }
+
+        #nav a:hover {
+            color: gold;
+            transition: 0.3s;
+        }
+
+        footer {
+            position: absolute;
+            width: 95%;
+            bottom: 0;
+        }
+
+        footer p {
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+
+        .golden {
+            color: gold;
+        }
+    </style>
+    {% block head%}
+    {% endblock %}
+</head>
+
+<body>
+    <table id="top">
+        <tr>
+            <th id="img"><img src="https://cdn.discordapp.com/avatars/493107597281329185/0d3d267587437dd093546eb1e1a8ad39.png?size=2048" alt="discord-pfp"></th>
+            <th id="name"><h1>acero<span class="golden-text">@</span>dev: <span class="golden-text">~</span></h1></th>
+            <th id="github"><a href="https://github.com/Aceroph" class="fa-brands fa-github"></a></th>
+        </tr>
+    </table>
+    <hr>
+    <table id="nav">
+        <tr>
+            <th><a href="/">Home</a></th>
+            <th><a href="/upload">Upload</a></th>
+            <th><a href="/files">Library</a></th>
+        </tr>
+    </table>
+    <hr>
+    <footer>
+        <hr>
+        <p>V2 <span class="golden">©</span> ace-network</p>
+    </footer>
+    {% block body %}
+    {% endblock %}
+</body>

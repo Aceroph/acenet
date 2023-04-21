@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+<head>
+    {% block head %}
+    <title>File Library</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        li {
+            padding-bottom: 5px;
+        }
+
+        li a {
+            color: white;
+            transition: 0.3s;
+        }
+
+        li a:hover {
+            color: gold;
+            transition: 0.3s;
+        }
+
+        #empty {
+            text-align: center;
+            color: crimson;
+        }
+    </style>
+    {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+    <ul>
+        {% if items %}
+        {% for type, item in items %}
+        {% if type == 'dir' %}
+        <li><a href="/files/{{ item }}"><span class="golden">~/</span> {{ item }} <span class="golden">/</span></a></li>
+        {% else %}
+        <li><a href="/files/{{ item }}"><span class="golden">~/</span> {{ item }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <h2 id="empty">Empty directory !</h2>
+        {% endif %}
+    </ul>
+    {% endblock %}
+</body>
