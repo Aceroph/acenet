@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = "f2gjdke02984ngnyjok09ewhdbwg2tr4fkrjr"
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+os.curdir = 'acenet/'
 
 def allowed_file(filename: str):
 	print(filename.split('.')[-1].lower())
@@ -12,7 +13,7 @@ def allowed_file(filename: str):
 
 def uploadfileexists():
 	if not os.path.exists('files/'):
-		os.mkdir('files/')
+		os.mkdir('files')
 
 def findpath(pathA: str, pathB: str):
 	e = True
@@ -81,7 +82,7 @@ def show(filename):
 			if os.path.isdir(f'{path}/{item}'):
 				items.append(['dir', item])
 			else:
-				items.append(['file', item])
+				items.append(['file'])
 
 		return render_template('library.html', items=sorted(items))
 
