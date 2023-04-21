@@ -12,7 +12,7 @@ def allowed_file(filename: str):
 
 def uploadfileexists():
 	if not os.path.exists('files/'):
-		os.mkdir('files')
+		os.mkdir('acenet/files')
 
 def findpath(pathA: str, pathB: str):
 	e = True
